@@ -1,7 +1,7 @@
 # Pull base image
 FROM node:18
 
-ENV AGLIO_VERSION=1.6.0
+ENV AGLIO_VERSION=1.6.1
 
 # Install Aglio
 RUN npm install -g aglio@$AGLIO_VERSION
