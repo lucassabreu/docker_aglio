@@ -16,6 +16,7 @@ function delete_ignored_tags {
 }
 
 function build_missing_tags {
+  commit=$(git rev-parse HEAD)
   for tag in $( gather_tags | grep -v -f .tagignore ); do
     echo -n "Tag: v${tag} ... "
     if git show-ref --tags | grep "tags/v${tag}$" &> /dev/null
@@ -26,6 +27,7 @@ function build_missing_tags {
       sed -i "s/AGLIO_VERSION=.*/AGLIO_VERSION=${tag}/" Dockerfile
       git add Dockerfile && git commit -m "using version v${tag}"
       git tag "v${tag}" && git push --tags
+      git reset --hard $commit
     fi
   done
 }
